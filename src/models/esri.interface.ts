@@ -1,0 +1,1 @@
+export type sketchTool = "point" | "multipoint" | "polyline" | "polygon" | "rectangle" | "circle"
