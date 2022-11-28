@@ -47,30 +47,30 @@
 >
   <calcite-flow bind:this={flowNode}>
     <calcite-flow-item>
-      <calcite-block loading={$state==='loading'} open>
-        <calcite-label>
-          Select a trace direction
-          <calcite-select label="Select a trace group">
-            <calcite-option selected value="Downstream">
-              Downstream
-            </calcite-option>
-          </calcite-select>
-        </calcite-label>
-        <calcite-notice active color="blue" icon width="full">
-          <div slot="message">
-            This tool delineates watersheds from the regional subbasin dataset.
-            <calcite-link
-              icon-start="link"
-              href="https://data-ocpw.opendata.arcgis.com/datasets/regional-subbasins/explore"
-              target="_blank"
-            >
-              More info
-            </calcite-link>
-          </div>
-        </calcite-notice>
-      </calcite-block>
+      
       <calcite-panel open>
-        <calcite-block
+        <calcite-block loading={$state==='loading'} open>
+          <calcite-label>
+            Select a trace direction
+            <calcite-select label="Select a trace group">
+              <calcite-option selected value="Downstream">
+                Downstream
+              </calcite-option>
+            </calcite-select>
+          </calcite-label>
+          <calcite-notice active color="blue" icon width="full">
+            <div slot="message">
+              This tool delineates watersheds from the regional subbasin dataset.
+              <calcite-link
+                icon-start="link"
+                href="https://data-ocpw.opendata.arcgis.com/datasets/regional-subbasins/explore"
+                target="_blank"
+              >
+                More info
+              </calcite-link>
+            </div>
+          </calcite-notice>
+          <calcite-block
           heading="Starting Point"
           summary="Add a point where the trace should start."
           open
@@ -83,6 +83,8 @@
             >Add Point</calcite-button
           >
         </calcite-block>
+        </calcite-block>
+       
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <calcite-fab
           slot="fab"

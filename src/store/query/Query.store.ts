@@ -6,7 +6,8 @@ import type {
   QueryStoreGettersInterface,
 } from "./models/index";
 import type { sketchTool } from "$models/esri.interface";
-import type { Results, PromiseResults } from "$models/index";
+import type { PromiseResults } from "$models/index";
+import { LAYERTITLES } from "$models/index";
 import {
   createRSBTracePopup,
   createISOPopup,
@@ -22,7 +23,6 @@ import { TextSymbol, SimpleMarkerSymbol } from "@arcgis/core/symbols";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import Graphic from "@arcgis/core/Graphic";
 import Query from "@arcgis/core/rest/support/Query";
-import Feature from "@arcgis/core//widgets/Feature";
 import PopupTemplate from "@arcgis/core/PopupTemplate";
 import { jsPDF } from "jspdf";
 import { applyPlugin } from "jspdf-autotable";
@@ -510,31 +510,6 @@ export const useQueryStore = (): QueryStoreInterface => {
       const isFeature = graphic?.layer.type === "feature";
       let heading = graphic.attributes["OBJECTID"];
 
-      const LAYERTITLES = {
-        rsbTrace: "Trace Results",
-        rsb: "Regional Subbasins",
-        landslide: "Landslides",
-        resources: "Planning Resources",
-        hcoc: "Exempted Hydrologic Condition of Concern (HCOC) areas",
-        landUse: "Land Use",
-        liquefaction: "Liquefaction",
-        susceptibility: "Soil Susceptibility to Rill and Sheet Erosion (K Factor)",
-        plume: "Groundwater Contaminent Plumes",
-        depth: "Depth to First Groundwater (1980)",
-        constraints: "Infiltration Constraints",
-        coarseSed: "South OC Potential Coarse Sediment Area (June 2018)",
-        soil: "Soil",
-        slope: "Slope",
-        iso: "Rainfall 85th Percentile",
-        shallow: "Shallow Aquifer Elevation",
-        principal: "Principal Aquifer Elevation",
-        assessedLines: "Assessed Lines",
-        assessedPolys: "Assessed Polygons",
-        impairedLines: "Impaired Lines",
-        impairedPolys: "Impaired Polygons",
-        parcels: "Parcels",
-      };
-
       if (isFeature) {
         switch (graphic.layer.title) {
           case LAYERTITLES.rsbTrace:
@@ -643,10 +618,8 @@ export const useQueryStore = (): QueryStoreInterface => {
           default:
             break;
         }
-
-        
       }
-      return {heading: heading, graphic: graphic}
+      return { heading: heading, graphic: graphic };
     },
   };
 

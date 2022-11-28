@@ -74,7 +74,11 @@
   data-panel-id={panelId}
   {hidden}
 >
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <calcite-link on:click={hideAll}> Hide all </calcite-link>
-  <div id="layers-container" bind:this={container} />
+  <calcite-block open>
+    <div>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <calcite-link on:click={hideAll}> Hide all </calcite-link>
+      <div id="layers-container" bind:this={container} />
+    </div>
+  </calcite-block>
 </calcite-panel>

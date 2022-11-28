@@ -5,8 +5,12 @@ import type {
   MapStoreGettersInterface,
   MapStoreActionsInterface,
 } from "./models/index";
+import type { ScreenPoint, ViewOnImmediateClick } from "$models/esri.interface";
+import type { Results } from "$models/index";
+import { LAYERTITLES } from "$models/index";
 import * as mapElements from "./Map.esri";
 import FeatureFilter from "@arcgis/core/layers/support/FeatureFilter";
+import { useLayoutStore } from "../layout/Layout.store";
 
 const writableMapStore = SvelteStore.writable<MapStateInterface>({
   view: null,
@@ -15,6 +19,7 @@ const writableMapStore = SvelteStore.writable<MapStateInterface>({
   rsbLayer: mapElements.rsbLayer,
   rsbDsLayer: mapElements.rsbDSLayer,
   highlight: null,
+  hitTestResults: [],
   // operationalLayers: mapElements.layers
 });
 
@@ -34,6 +39,56 @@ export const useMapStore = (): MapStoreInterface => {
 
     setView: async (view: __esri.MapView) => {
       console.log("MapStore: action: setView", view);
+      view.popup.autoOpenEnabled = false;
+      view.popup.highlightEnabled = false;
+
+      // @ts-ignore
+      view.on("immediate-click", async (event: ViewOnImmediateClick) => {
+        const point: ScreenPoint | MouseEvent = { x: event.x, y: event.y };
+
+        const hitTestResults = await view.hitTest(point);
+
+        let filteredHit = hitTestResults.results
+          .filter((result) => {
+            return result.type === "graphic";
+          })
+          .map((graphicHit: __esri.GraphicHit) => {
+            if (
+              Object.values(LAYERTITLES).includes(
+                graphicHit.graphic.layer.title
+              )
+            ) {
+              return graphicHit.graphic;
+            }
+          })
+          .filter(Boolean);
+
+        if (filteredHit.length > 0) {
+          let resultsGroupBy = filteredHit.reduce((previous, current) => {
+            previous[current.layer.title] = previous[current.layer.title] || [];
+            previous[current.layer.title].push(current);
+            return previous;
+          }, {});
+
+          let filteredResults: Results[] = Object.keys(resultsGroupBy).map(
+            (key) => {
+              return { title: key, features: resultsGroupBy[key] };
+            }
+          );
+
+          writableMapStore.update((state) => {
+            state.hitTestResults = filteredResults;
+            return state;
+          });
+
+          let layoutStore = useLayoutStore();
+          let activePanel = SvelteStore.get(layoutStore.getters.activePanel);
+          if (activePanel != "popup") {
+            layoutStore.actions.setActivePanel("popup");
+          }
+        }
+      });
+
       writableMapStore.update((state) => {
         state.view = view;
         return state;
@@ -78,12 +133,23 @@ export const useMapStore = (): MapStoreInterface => {
 
       const title = layer.title;
 
-      const layerView = await SvelteStore.get(writableMapStore).view.whenLayerView(layer)
+      const layerView = await SvelteStore.get(
+        writableMapStore
+      ).view.whenLayerView(layer);
 
       if (layerView) {
         const filter = new FeatureFilter(props);
-        layerView.filter = filter
+        layerView.filter = filter;
       }
+    },
+    clearHitTestResults: () => {
+      writableMapStore.update((state) => {
+        if (state.highlight) {
+          state.highlight.remove();
+        }
+        state.hitTestResults = [];
+        return state;
+      });
     },
   };
 
@@ -101,6 +167,10 @@ export const useMapStore = (): MapStoreInterface => {
     writableMapStore,
     ($state) => $state.rsbDsLayer
   );
+  const hitTestResults = SvelteStore.derived(
+    writableMapStore,
+    ($state) => $state.hitTestResults
+  );
 
   const getters: MapStoreGettersInterface = {
     view,
@@ -108,6 +178,7 @@ export const useMapStore = (): MapStoreInterface => {
     queryLayers,
     rsbLayer,
     rsbDsLayer,
+    hitTestResults,
   };
 
   return {

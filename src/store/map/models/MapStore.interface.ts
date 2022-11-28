@@ -1,4 +1,5 @@
 import type { Readable } from "svelte/store";
+import type { Results } from "$models/index";
 
 /**
  * @name MapStoreActionsInterface
@@ -14,7 +15,8 @@ export interface MapStoreActionsInterface {
    */
   highlight(graphic: __esri.Graphic, layerId: string): void;
   setPadding(padding: __esri.ViewPadding): void;
-  applyFilter(layer: __esri.FeatureLayer, query: __esri.Query): Promise<void>
+  applyFilter(layer: __esri.FeatureLayer, query: __esri.Query): Promise<void>;
+  clearHitTestResults(): void;
 }
 
 /**
@@ -28,6 +30,7 @@ export interface MapStoreGettersInterface {
   queryLayers: Readable<(__esri.FeatureLayer | __esri.MapImageLayer)[]>;
   rsbLayer: Readable<__esri.FeatureLayer>;
   rsbDsLayer: Readable<__esri.FeatureLayer>;
+  hitTestResults: Readable<Results[]>;
   // operationalLayers: Readable<(__esri.FeatureLayer | __esri.MapImageLayer)[]>;
 }
 
