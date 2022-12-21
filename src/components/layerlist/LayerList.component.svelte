@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import "@esri/calcite-components/dist/components/calcite-panel";
-  import "@esri/calcite-components/dist/components/calcite-link";
+  import "@esri/calcite-components/dist/components/calcite-action";
   import "@esri/calcite-components/dist/components/calcite-block";
   import LayerList from "@arcgis/core/widgets/LayerList";
   import { useAppStore } from "$store/index";
@@ -78,7 +78,13 @@
   <calcite-block open>
     <div>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <calcite-link on:click={hideAll}> Hide all </calcite-link>
+      <calcite-action
+        on:click={hideAll}
+        slot="control"
+        text-enabled
+        icon="layer-hide"
+        text="Hide All"
+      />
       <div id="layers-container" bind:this={container} />
     </div>
   </calcite-block>
