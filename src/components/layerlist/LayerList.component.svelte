@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import "@esri/calcite-components/dist/components/calcite-panel";
   import "@esri/calcite-components/dist/components/calcite-link";
+  import "@esri/calcite-components/dist/components/calcite-block";
   import LayerList from "@arcgis/core/widgets/LayerList";
   import { useAppStore } from "$store/index";
 

@@ -6,6 +6,10 @@
   import "@esri/calcite-components/dist/components/calcite-block";
   import "@esri/calcite-components/dist/components/calcite-accordion";
   import "@esri/calcite-components/dist/components/calcite-accordion-item";
+  import "@esri/calcite-components/dist/components/calcite-flow";
+  import "@esri/calcite-components/dist/components/calcite-flow-item";
+  import "@esri/calcite-components/dist/components/calcite-button";
+  import "@esri/calcite-components/dist/components/calcite-fab";
   import type { CalciteFlow } from "@esri/calcite-components/dist/components/calcite-flow";
   import { useAppStore } from "$store/index";
   import Feature from "$components/shared/feature/Feature.component.svelte";

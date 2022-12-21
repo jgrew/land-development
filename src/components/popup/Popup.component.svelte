@@ -2,6 +2,8 @@
   import "@esri/calcite-components/dist/components/calcite-panel";
   import "@esri/calcite-components/dist/components/calcite-link";
   import "@esri/calcite-components/dist/components/calcite-block";
+  import "@esri/calcite-components/dist/components/calcite-accordion";
+  import "@esri/calcite-components/dist/components/calcite-accordion-item";
   import { useAppStore } from "$store/index";
   import Feature from "$components/shared/feature/Feature.component.svelte";
 

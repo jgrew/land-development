@@ -38,6 +38,7 @@
       </div>
     </calcite-notice>
   </div>
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <calcite-button
     slot="primary"
     on:click={handleClick}

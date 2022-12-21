@@ -10,6 +10,7 @@ import type { Results } from "$models/index";
 import { LAYERTITLES } from "$models/index";
 import * as mapElements from "./Map.esri";
 import FeatureFilter from "@arcgis/core/layers/support/FeatureFilter";
+import BasemapToggle from "@arcgis/core/widgets/BasemapToggle";
 import { useLayoutStore } from "../layout/Layout.store";
 
 const writableMapStore = SvelteStore.writable<MapStateInterface>({
@@ -38,9 +39,18 @@ export const useMapStore = (): MapStoreInterface => {
     },
 
     setView: async (view: __esri.MapView) => {
-      console.log("MapStore: action: setView", view);
+      console.log("MapStore: action: setView", {view});
       view.popup.autoOpenEnabled = false;
       view.popup.highlightEnabled = false;
+
+      const basemapToggle = new BasemapToggle({
+        view: view,
+        nextBasemap: "hybrid",
+      });
+
+      view.ui.add(basemapToggle, {
+        position: "bottom-right",
+      });
 
       // @ts-ignore
       view.on("immediate-click", async (event: ViewOnImmediateClick) => {

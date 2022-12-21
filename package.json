@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=https://ocgis.com/ocpw/envres/landdev/",
+    "build": "vite build --base=https://ocgis.com/ocpw/envres/landdevnext/",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },

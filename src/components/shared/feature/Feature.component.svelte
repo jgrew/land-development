@@ -3,6 +3,7 @@
   import Feature from "@arcgis/core/widgets/Feature";
   import { useAppStore } from "$store/index";
   import "@esri/calcite-components/dist/components/calcite-block";
+  import "@esri/calcite-components/dist/components/calcite-action";
   import type { FeatureProp } from "$models/index";
   import Graphic from "@arcgis/core/Graphic";
 
