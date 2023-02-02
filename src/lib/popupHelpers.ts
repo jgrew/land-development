@@ -78,6 +78,7 @@ export function createRSBTracePopup(graphic: esri.Graphic): string {
   ];
 
   const dest = destLookup.find((el) => el.watershed === attributes.Watershed);
+  
   const string = `<p>Trace originated in Subbasin <strong>#${
     attributes.CatchIDN
   }</strong> 

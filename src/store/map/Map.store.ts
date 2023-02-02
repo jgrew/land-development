@@ -63,9 +63,10 @@ export const useMapStore = (): MapStoreInterface => {
             return result.type === "graphic";
           })
           .map((graphicHit: __esri.GraphicHit) => {
+            console.log(graphicHit)
             if (
               Object.values(LAYERTITLES).includes(
-                graphicHit.graphic.layer.title
+                graphicHit.graphic.layer?.title
               )
             ) {
               return graphicHit.graphic;

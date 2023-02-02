@@ -170,7 +170,7 @@ export const useDelineateStore = (): DelineateStoreInterface => {
       });
     },
     createLabel: (graphic: __esri.Graphic) => {
-      console.log("DelineateStore: action: createLabel", graphic);
+      console.log("DelineateStore: action: createLabel", {graphic});
       writableDelineateStore.update((state) => {
         let mapView = SvelteStore.get(view);
         if (state.label) {

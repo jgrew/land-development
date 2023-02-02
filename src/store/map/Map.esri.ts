@@ -222,7 +222,7 @@ export const rsbDSLayer = new FeatureLayer({
   portalItem: {
     id: "f37d7323d6d54c8982287ee6e331dedf",
   },
-  outFields: ["CatchIDN", "OBJECTID"],
+  outFields: ["Watershed", "CatchIDN", "OBJECTID"],
   visible: false,
   opacity: 0.25,
   minScale: 204800,
@@ -237,7 +237,7 @@ export const rsbDSLayer = new FeatureLayer({
       color: [67, 19, 172, 0.99],
     }),
   }),
-    title: LAYERTITLES.rsbTrace,
+  title: LAYERTITLES.rsbTrace,
   popupTemplate: new PopupTemplate({
     outFields: ["*"],
     title: LAYERTITLES.rsbTrace,
