@@ -27,7 +27,7 @@ const writableMapStore = SvelteStore.writable<MapStateInterface>({
 export const useMapStore = (): MapStoreInterface => {
   const actions: MapStoreActionsInterface = {
     zoomToGraphic: async (graphic: __esri.Graphic) => {
-      console.log("MapStore: action: zoomToGraphic", graphic);
+      console.log("MapStore: action: zoomToGraphic", {graphic});
       const mapView = SvelteStore.get(writableMapStore).view;
       mapView.goTo(
         {
@@ -107,7 +107,7 @@ export const useMapStore = (): MapStoreInterface => {
     },
 
     highlight: (graphic: __esri.Graphic, layerId: string = null) => {
-      console.log("MapStore: action: highlight", graphic);
+      console.log("MapStore: action: highlight", {graphic});
       let layer;
       const mapView = SvelteStore.get(writableMapStore).view;
       if (layerId) {
@@ -131,7 +131,7 @@ export const useMapStore = (): MapStoreInterface => {
       });
     },
     setPadding: (padding: __esri.ViewPadding) => {
-      console.log("MapStore: action: setPadding", padding);
+      console.log("MapStore: action: setPadding", {padding});
       SvelteStore.get(writableMapStore).view.padding = padding;
     },
     applyFilter: async (layer: __esri.FeatureLayer, query: __esri.Query) => {
