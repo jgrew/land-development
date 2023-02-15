@@ -18,6 +18,7 @@ export interface QueryStoreActionsInterface {
    * Removes graphic marker and label, any sketch features reset search widget
    */
   clearSearch(): void;
+  /** Queries the "operational layers" of interest to users */
   query(): Promise<void>;
   /**
    * Creates label for target delineation location
@@ -34,17 +35,27 @@ export interface QueryStoreActionsInterface {
    */
   clearSketch(): void;
   /**
-   * Create graphic marker and label from esri search widget complete
+   * Create graphic marker and label from esri search widget completion event
    * @param {__esri.SearchSearchCompleteEvent} searchResults esri search widget results
    */
   searchComplete(searchResults: __esri.SearchSearchCompleteEvent): void;
+  /**
+   * Initializes the components sketchviewmodel create workflow with the input tool
+   * @param tool ESRI sketchviewmodel tool to use for drawing
+   */
   draw(tool: sketchTool): void;
+  /**
+   * Creates a query dependent on the type of layer, e.g. FeatureLayer or MapImageLayer
+   * @param layer input layer
+   */
   createQuery(layer: __esri.FeatureLayer | __esri.MapImageLayer): __esri.Query;
   /**
    * Bundles other reset/clearing functions and removes and results
    */
   clear(): Promise<void>;
+  /** Exports query results to a pdf */
   exportPDF(): void;
+  /** Adjusts the graphic popupTemplate */
   createFeaturePopup(graphic: __esri.Graphic): FeatureProp;
 }
 
@@ -54,10 +65,15 @@ export interface QueryStoreActionsInterface {
  * Getters will be used to consume the data from the store.
  */
 export interface QueryStoreGettersInterface {
+  /** Component state */
   state: Readable<State>;
+  /** ESRI search widget */
   search: Readable<__esri.widgetsSearch>;
+  /** Query results */
   results: Readable<Results[]>;
+  /** Input target for query */
   target: Readable<__esri.Geometry>;
+  /** ESRI sketch view model */
   sketchViewModel: Readable<__esri.SketchViewModel>;
 }
 

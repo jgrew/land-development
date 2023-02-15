@@ -19,7 +19,9 @@ export interface LayoutStoreActionsInterface {
  * Getters will be used to consume the data from the store.
  */
 export interface LayoutStoreGettersInterface {
+  /** Configuration for calcite-shell action bar */
   shellConfig: Readable<ShellConfig>;
+  /** Currently selected action/panel */
   activePanel: Readable<string>;
 }
 
